@@ -16,6 +16,13 @@ async function bootstrap() {
   app.setViewEngine('ejs');
   app.useGlobalPipes(new ValidationPipe());
 
+  //config cors
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+  });
   await app.listen(configService.get<string>('PORT'));
+  console.log('>> listen to PORT: ', configService.get<string>('PORT'));
 }
 bootstrap();
