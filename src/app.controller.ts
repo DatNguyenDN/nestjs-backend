@@ -28,9 +28,15 @@ export class AppController {
     return this.authService.login(req.user);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
+    return req.user; // <= được trả về từ jwt.strategy asnyc validate
+  }
+
+  // @UseGuards(JwtAuthGuard)
+  @Get('profile1')
+  getProfile1(@Request() req) {
     return req.user; // <= được trả về từ jwt.strategy asnyc validate
   }
 }
