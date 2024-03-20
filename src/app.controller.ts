@@ -13,6 +13,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Public } from 'src/decorator/customize';
 
 @Controller()
 export class AppController {
@@ -22,6 +23,7 @@ export class AppController {
     private authService: AuthService,
   ) {}
 
+  @Public()
   @UseGuards(LocalAuthGuard)
   @Post('/login')
   handleLogin(@Request() req) {
@@ -29,6 +31,7 @@ export class AppController {
   }
 
   // @UseGuards(JwtAuthGuard)
+  @Public()
   @Get('profile')
   getProfile(@Request() req) {
     return req.user; // <= được trả về từ jwt.strategy asnyc validate
