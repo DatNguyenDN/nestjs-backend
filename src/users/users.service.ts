@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/users/schemas/user.schema';
+import { User, UserDocument } from 'src/users/schemas/user.schema';
 import { UpdateUserDto } from './dto/update-user.dto';
 import mongoose, { Model } from 'mongoose';
 import { genSaltSync, hashSync, compareSync } from 'bcryptjs';
 import { CreateUserDto } from './dto/create-user.dto';
+import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private UserModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private UserModel: SoftDeleteModel<UserDocument>,
+  ) {}
 
   getHashPassword = (password: string) => {
     const salt = genSaltSync(10);
@@ -60,7 +63,7 @@ export class UsersService {
   remove(id: string) {
     if (!mongoose.Types.ObjectId.isValid(id)) return 'Not found user';
 
-    return this.UserModel.deleteOne({
+    return this.UserModel.softDelete({
       _id: id,
     });
   }
