@@ -7,6 +7,7 @@ import { IUser } from 'src/users/users.interface';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private configService: ConfigService) {
+    //decode JWT
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
@@ -14,9 +15,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  //decode JWT
   async validate(payload: IUser) {
     const { _id, email, name, role } = payload;
-    return { _id, email, name, role };
+
+    return { _id, email, name, role }; //req.user
   }
 }
