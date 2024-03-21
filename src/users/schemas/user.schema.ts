@@ -58,7 +58,7 @@ export class User {
   };
 
   @Prop()
-  createAt: Date;
+  createdAt: Date;
 
   @Prop()
   updateAt: Date;

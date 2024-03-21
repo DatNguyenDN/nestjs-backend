@@ -49,7 +49,7 @@ export class CreateUserDto {
   company: Company;
 }
 
-export class RegisterDto {
+export class RegisterUserDto {
   @IsNotEmpty({ message: 'Name must not be empty' })
   name: string;
 
