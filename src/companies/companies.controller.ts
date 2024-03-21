@@ -12,19 +12,21 @@ import {
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { User } from 'src/decorator/customize';
+import { ResponseMessage, User } from 'src/decorator/customize';
 import { IUser } from 'src/users/users.interface';
 
 @Controller('companies')
 export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
 
+  @ResponseMessage('Created OK')
   @Post()
   create(@Body() CreateCompanyDto: CreateCompanyDto, @User() user: IUser) {
     return this.companiesService.create(CreateCompanyDto, user);
   }
 
   @Get()
+  @ResponseMessage('Fetch list companies with pagination')
   findAll(
     @Query('page') currentPage: string,
     @Query('limit') limit: string,
