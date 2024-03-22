@@ -8,7 +8,7 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { Public, ResponseMessage, User } from 'src/decorator/customize';
@@ -42,7 +42,16 @@ export class AuthController {
   @Get('/account')
   handleAccount(@User() user: IUser) {
     //@User => req.user
-    console.log(user);
+    // console.log(user);
     return { user };
+  }
+
+  @Public()
+  @ResponseMessage('Get user by refresh token')
+  @Get('/refresh')
+  handleRefreshToken(@Req() request: Request) {
+    //lay ra refesh_token tu cookies
+    const refreshToken = request.cookies['refresh_token'];
+    return this.authService.processNewToken(refreshToken);
   }
 }
