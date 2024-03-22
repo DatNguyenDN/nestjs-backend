@@ -28,8 +28,9 @@ export class CompaniesController {
   @Get()
   @ResponseMessage('Fetch list companies with pagination')
   findAll(
-    @Query('page') currentPage: string,
-    @Query('limit') limit: string,
+    //đổi tên query để trùng với package bên FE
+    @Query('current') currentPage: string,
+    @Query('pageSize') limit: string,
     @Query() qs: string,
   ) {
     // return { qs };
